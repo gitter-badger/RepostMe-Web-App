@@ -1,8 +1,0 @@
-use ru.intcode.repostme.webapp.controllers
-
-GET $/assets/(.*) asset(1:String)
-
-GET $/ MainController.index()
-
-
-
