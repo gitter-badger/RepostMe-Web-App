@@ -6,7 +6,7 @@ public class RepostMeWebApp extends FugaApp {
 
     @Override
     public void prepare() {        
-        getConfiguration().loadFromResoures("config/default.config");
+        getConfiguration().loadFromResources("config/default.config");
         
         getRouter().loadFromResources("routes/main.routes");
         
