@@ -1,0 +1,98 @@
+* { margin: 0; padding: 0; font-family: Arial,sans-serif; }
+body { background-color: #eee; }
+a { text-decoration: inherit; color: inherit; }
+
+.container { min-width: 1024px; background-color: #eee; color: #666;}
+
+.header { height: 80px; line-height: 80px; }
+
+.logo, .searchbox, .controlls { display: inline-block; }
+
+.logo { width: 200px; padding: 0; font-size: 30px; text-align: center; text-shadow: 0 0 0.1px #333; }
+
+.searchbox { border: 1px solid #ddd; height: 30px; margin: 25px 30px; width: 400px;  background-color: #fff; }
+.searchbox input { border: 0; display: block; width: 390px; height: 30px; padding: 0 5px; margin: 0; font-size: 18px; }
+.searchbox input:focus { outline: 0; }
+
+.controlls { float: right; padding: 0 30px; }
+.controlls .login { cursor: pointer; color: #C00000; text-decoration: underline;}
+
+.content { width: 100%; }
+.navigation, .main { display: inline-block; vertical-align: top; }
+
+.navigation { z-index: 12; width: 200px; box-shadow: 2px 0 5px -2px #bbb, 0 2px 5px -2px #bbb; }
+.navigation-main { background-color: #fff; }
+.navigation-main .navigation-element { padding-left: 45px; height: 40px; line-height: 40px; display: block; }
+.navigation-main .navigation-element.selected { background-color: #C00000; color: #fff; }
+
+.navigation-sub { background-color: #eee; font-size: 14px; }
+.navigation-sub .navigation-element { padding-left: 15px; height: 30px; line-height: 30px;  display: block; }
+.navigation-element:hover { background-color: #ddd; }
+
+.action-bar { z-index: 10; height: 40px; width: 100%; overflow: hidden; background-color: #fff;  line-height: 40px; box-shadow: 0 2px 5px -2px #bbb; }
+.action-bar .action-element { height: 100%; display: inline-block; text-align: center; box-shadow: 2px 0 5px -2px #bbb; }
+.action-bar .action-element { color: inherit; text-decoration: inherit; padding: 0 15px; }
+.action-bar .action-element:first-child { margin-left: 200px; }
+.action-bar .action-element:last-child { box-shadow: none; }
+
+.main { margin: 45px 0 0 0; }
+
+.offers { margin-bottom: 30px; }
+.offers-title { font-size: 26px; color: #999; margin-bottom: 5px; padding-left: 5px; display: block; height: 60px; line-height: 60px; }
+.offers-title .more { float: right; font-size: 18px; text-decoration: underline; margin-right: 30px;}
+.offers-title:hover { background-color: #ddd; }
+.offers-list {  }
+.offers-list .offer { margin: 5px; width: 400px; height: 220px; box-shadow: 0 2px 3px 0px #bbb;
+                      background-color: #fff; display: inline-block; }
+.offer .image { width: 100%; height: 178px; overflow: hidden; border-bottom: 2px solid #ddd; float: left;}
+.offer .image IMG { max-width:100%; height: auto; }
+.offer .info { background-color: #fff; height: 40px; float: left; width: 400px; }
+.offer .info .title { vertical-align: middle; padding-left: 5px; font-size: 16px; box-sizing: border-box; }
+.offer .info .profit {  height: 40px; float: right; background-color: #C00000; color: #fff; line-height: 40px; padding: 0 5px;}
+.offer .info .profit .to { color: #bbb; font-size: 16px; display: inline-block; margin-right: 5px; color: #fff; }
+.offer .info .profit .quantity { display: inline-block; font-size: 40px;  }
+.offer .decription { display: none; position: absolute; background-color: #000; color: #fff; clear: both;
+                     background-color: rgba(0,0,0,0.5); width: 400px; height: 178px; }
+
+.offer .decription .text { padding: 15px; }
+.offer:hover .decription { display: block; }
+.offer { display: block; cursor: pointer; }
+
+.full-offer, .full-offer-desc, .full-offer-title { margin-top: 15px;  box-shadow: 0 2px 3px 0px #bbb; background-color: #fff; }
+.full-offer { height: 250px; }
+.full-offer .image, .full-offer .info { display: inline-block; padding: 0; margin: 0; }
+.full-offer .image { width: 400px; height: 250px;  }
+.full-offer .image IMG { width:auto; height: 100%; }
+.full-offer .info { vertical-align: top;  width: 330px; height: 100%; margin-left: -4px; background-color: #fff; }
+.full-offer .info .quantity { background-color: #C00000; font-size: 35px; text-align: center; height: 60px; line-height: 60px; color: #fff; }
+.full-offer .info .terms { padding-left: 15px; height: 40px; line-height: 40px; background-color: #eee; }
+.full-offer .info .already { padding-left: 15px; height: 40px; line-height: 40px; }
+.full-offer .info .getoffer { text-align: center; height: 40px; line-height: 40px; font-size: 28px; margin-top: 60px; text-decoration: underline; }
+
+.full-offer-desc { width: 700px; padding: 15px; }
+.full-offer-title { width: 700px; padding: 15px; font-size: 22px; color: #666; }
+
+.main h2 { font-size: 26px; color: #666; margin-bottom: 5px; padding-left: 5px; display: block; height: 60px; line-height: 60px; font-weight: normal; }
+.main h3 {font-size: 22px; color: #666; margin-bottom: 5px; padding-left: 5px; display: block; height: 50px; line-height: 50px; font-weight: normal;}
+
+.kupons { display: inline-block; background-color: #fff; box-shadow: 0 2px 3px 0px #bbb; padding: 15px; width: 700px; }
+.kupons .kupons-element { display: block; border-bottom: 1px solid #bbb; height: 40px; line-height: 40px; }
+.kupons .kupons-element:hover { background-color: #ddd; }
+.kupons .kupons-element:last-child { border: 0; }
+
+.kupons-element .title, .kupons-element .date, .kupons-element .action {  display: inline-block; }
+.kupons-element .title { }
+.kupons-element .date { float: right; }
+
+.footer { text-align: left;  }
+
+/* Super scroll! */
+.action-bar, .navigation { position: absolute; }
+.navigation { top: 80px; }
+.action-bar.super-fixed { top: 0px; position: fixed;}
+.navigation.super-fixed { top: 0px; position: fixed;}
+
+.content .wrapper .main { margin-left: 245px; display: inline-block;  text-align: left; }
+
+.wrapper { width: 100%;  text-align: center; }
+@media (max-width: 1024px) { .wrapper { text-align: left; } .main { margin-left: 245px; }}

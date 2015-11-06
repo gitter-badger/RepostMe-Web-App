@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>РепостМи{% block title %}{% endblock %}</title>
+        <link href="{# api.asset('css/common.css') #}" rel="stylesheet" type="text/css" media="screen" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo"><a href="{# api.that() #}">РепостМи</a></div>
+                <div class="searchbox"><input type="text" placeholder="Поиск"/></div>
+                <div class="controlls"><div class="login">Войти через ВКонтакте</div></div>
+            </div>
+
+
+            <div class="content">
+                <div class="action-bar">
+                    <!--
+                    <a href="#" class="action-element">Ссылка #1</a>
+                    <a href="#" class="action-element">Ссылка #2</a>
+                    <a href="#" class="action-element">Ссылка #3</a>
+                    -->
+                </div>
+                <div class="navigation">
+                    <div class="navigation-main">
+                        <a href="{# api.that() #}" class="navigation-element {% if(data.curCat === 0) %}{# 'selected' #}"><i class="fa fa-home"></i>&nbsp;&nbsp;Главная</a>
+                        <a href="{# api.that('category/food') #}" class="navigation-element {% if(data.curCat === 1) %}{# 'selected' #}"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;Питание</a>
+                        <a href="{# api.that('category/entertainment') #}" class="navigation-element {% if(data.curCat === 2) %}{# 'selected' #}"><i class="fa fa-gamepad"></i>&nbsp;&nbsp;Развлечения</a>
+                        <a href="{# api.that('category/goods') #}" class="navigation-element {% if(data.curCat === 3) %}{# 'selected' #}"><i class="fa fa-cart-arrow-down"></i>&nbsp;&nbsp;Товары</a>
+                        <a href="{# api.that('category/service') #}" class="navigation-element {% if(data.curCat === 4) %}{# 'selected' #}"><i class="fa fa-user"></i>&nbsp;&nbsp;Услуги</a>
+                    </div>
+                    <div class="navigation-sub">
+                        <a href="#" class="navigation-element">Мои купоны</a>
+                        <a href="#" class="navigation-element">Помощь</a>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="main">
+                        {% block content %}{% endblock %}
+                        <div class='footer'>© RepostMe, 2015</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="{# api.asset('js/common.js') #}"></script>
+    </body>
+</html>

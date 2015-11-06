@@ -1,8 +1,12 @@
 use ru.intcode.repostme.webapp.controllers
 
+// Assets
 GET $/assets/(.*) asset(1:String)
 
-GET $/ MainController.index()
+// Main
+GET $/                      MainController.index()
+GET $/category/(\w+)        MainController.category(1)
+
 
 
 
