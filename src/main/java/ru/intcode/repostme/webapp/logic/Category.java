@@ -29,17 +29,26 @@ public class Category {
         this.link = link;
     }
 
+    public static final String selectById
+            = "SELECT * FROM categories WHERE id = :id;";
+    
     public static final String selectAllQuery
             = "SELECT * FROM categories;";
 
+    public static final String selectByLinkQuery
+            = "SELECT * FROM categories WHERE link = :link;";
+
+    public static Category selectById(Database db, long id) {
+        try (Connection c = db.getSql2o().open()) {
+            return c.createQuery(Category.selectById).addParameter("id", id).executeAndFetchFirst(Category.class);
+        }
+    }
+    
     public static List<Category> selectAll(Database db) {
         try (Connection c = db.getSql2o().open()) {
             return c.createQuery(Category.selectAllQuery).executeAndFetch(Category.class);
         }
     }
-
-    public static final String selectByLinkQuery
-            = "SELECT * FROM categories WHERE link = :link;";
 
     public static Category selectByLink(Database db, String link) {
         try (Connection c = db.getSql2o().open()) {

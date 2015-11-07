@@ -1,27 +1,38 @@
 @extend base.html
 
+{% block title %}{% if(data.curCat !== 0) { %} - {# data.curCatName #}{% } %}{% endblock %}
+
+{% block actionbar %}{% if(data.curCat !== 0) { %}<a class="action-element">{# data.curCatName #}</a>{% } %}{% endblock %}
+
 {% block content %}
+
+{% if (data.all.isEmpty()) { %}
+<h3>К сожалению, вам нечего показать на этой странице.</h3>
+{% } else { %}
 <div class="offers">
 {% for (var cat in data.all) { %}
-{% var offers = data.all[cat]; %}
+    {% var offers = data.all[cat]; %}
     {% if (offers.isEmpty()) continue; %}
-    <a href="#" class="offers-title">{# cat.getName() #}<div class="more">Ещё</div></a>
-    
+    <a href="{# api.that('category/' + cat.getLink()) #}" class="offers-title">{# cat.getName() #}<div class="more">Ещё</div></a>
+
     {% for (var k in offers ) { %}
-        {% var offer = offers[k]; %}
-        <div class="offers-list">
-            <a class="offer" href="#">
-                <div class="image"><img src="assets/offers/{# offer.getPic() #}"/></div>
-                <div class="info">
-                    <div class="profit"><div class="quantity">-50%</div></div>
-                    <div class="title">{# offer.getName() #}</div>
-                </div>
-                <div class="decription">
-                    <div class="text">{# offer.getDescription() #}</div>
-                </div>
-            </a>
-        </div>
+    {% var offer = offers[k]; %}
+    <div class="offers-list">
+        <a class="offer" href="{# api.that('offer/' + data.hid.encode(offer.getId())) #}">
+            <div class="image"><img src="assets/offers/{# offer.getPic() #}"/></div>
+            <div class="info">
+                {% var descFrom = offer.getDiscFrom(); %}
+                {% var descTo   = offer.getDiscTo(); %}
+                <div class="profit">{% if(descFrom > 0) { %}<div class="to">до</div>{% } %}<div class="quantity">{# descTo #}%</div></div>
+                <div class="title">{# offer.getName() #}</div>
+            </div>
+            <div class="decription">
+                <div class="text">{# offer.getDescription() #}</div>
+            </div>
+        </a>
+    </div>
     {% } %}
 {% } %}
 </div>
+{% } %}
 {% endblock %}

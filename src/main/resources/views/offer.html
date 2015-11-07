@@ -1,0 +1,33 @@
+@extend base.html
+
+{% block title %} - {# data.offer.getName() #}{% endblock %}
+
+{% block actionbar %}{% if(data.curCat !== 0) { %}
+<a class="action-element">{# data.curCatName #}</a>
+{% } %}
+<a class="action-element">{# data.offer.getName() #}</a>
+{% endblock %}
+
+{% block content %}
+{% var offer = data.offer; %}
+
+<div class="full-offer">
+    <div class="image"><img src="{# api.that('assets/offers/' + offer.getPic()) #}"></div>
+    <div class="info">
+        <div class="quantity">
+            {% if(offer.getDiscFrom() > 0) { %}от {# offer.getDiscFrom() #}% до {# offer.getDiscTo() #}%{% } else { %}{# offer.getDiscTo() #}%{% } %}
+        </div>
+        <div class="terms"><i class="fa fa-clone"></i>&nbsp;&nbsp;Купонов за репост: {# offer.getKuponAmount() #}</div>
+        <div class="already"><i class="fa fa-users"></i>&nbsp;&nbsp;Купонов получено: {# data.kuponNumber #}</div>
+        <div class="getoffer"><a href="{# api.that('offer/' + data.hid.encode(offer.getId())) + '/get' #}">Получить купон!</a></div>
+    </div>
+</div>
+<div class="full-offer-title">{# offer.getDescription() #}</div>
+<div class="full-offer-desc">
+    <h3>Описание</h3>
+    <p>{# offer.getFullDescription() #}</p>
+    <h3>Условия</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse semper ex a eros dignissim ullamcorper. Sed ac eros ac diam pretium ultrices. Quisque id dolor pulvinar, consequat velit nec, vulputate metus. Mauris massa dolor, mollis vitae lobortis vel, tincidunt vehicula ante. Phasellus suscipit purus blandit orci dignissim, et tempor turpis mollis. Duis at imperdiet nisi. Donec gravida ex at lorem feugiat, a dapibus est euismod. Nunc posuere eget eros ac porttitor. Donec pulvinar nunc enim, in iaculis ante luctus vel. Duis leo leo, commodo mattis mattis eu, maximus sed lectus. Fusce nibh nisl, luctus nec tortor in, varius iaculis ex. Nunc eget dictum neque. Nam finibus urna sed nulla faucibus, a aliquet lorem convallis.</p>
+</div>
+
+{% endblock %}

@@ -1,12 +1,27 @@
 use ru.intcode.repostme.webapp.controllers
 
 // Assets
+GET $/assets/offers/(.*) ImageController.get(1)
 GET $/assets/(.*) asset(1:String)
+
+
+// Auth
+GET $/vk/oauth              AuthController.oauth()
+GET $/vk/oauthcallback      AuthController.oauthCallBack()
 
 // Main
 GET $/                      MainController.index()
 GET $/category/(\w+)        MainController.category(1)
 
+GET $/offer/(\w+)/get        MainController.getKupon(1)
+GET $/offer/(\w+)            MainController.offer(1)
 
+GET $/mykupons              MainController.mykupons()
+
+// Ajax
+POST $/api/repost            MainController.repost()
+
+// Static pages
+GET $/help                  view("help.html")
 
 

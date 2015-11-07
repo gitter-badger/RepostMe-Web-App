@@ -114,11 +114,19 @@ public class Offer {
         this.catId = catId;
     }
 
+    public static final String selectByIdQuery
+            = "SELECT * FROM offers WHERE id = :id;";
     public static final String selectAllQuery
             = "SELECT * FROM offers;";
 
     public static final String selectAllByCatQuery
             = "SELECT * FROM offers WHERE catId = :catId";
+
+    public static Offer selectById(Database db, long id) {
+        try (Connection c = db.getSql2o().open()) {
+            return c.createQuery(selectByIdQuery).addParameter("id", id).executeAndFetchFirst(Offer.class);
+        }
+    }
 
     public static Map<Category, List<Offer>> selectAll(Database db) {
         Map<Category, List<Offer>> map = new HashMap<>();
@@ -129,7 +137,9 @@ public class Offer {
             for (Category cat : cats) {
                 List<Offer> offers = c.createQuery(Offer.selectAllByCatQuery).addParameter("catId", cat.getId()).executeAndFetch(Offer.class);
 
-                map.put(cat, offers);
+                if (!offers.isEmpty()) {
+                    map.put(cat, offers);
+                }
             }
         }
 
@@ -145,9 +155,12 @@ public class Offer {
             for (Category cat : cats) {
                 List<Offer> offers = c.createQuery(Offer.selectAllByCatQuery).addParameter("catId", cat.getId()).executeAndFetch(Offer.class);
 
-                map.put(cat, offers);
+                if (!offers.isEmpty()) {
+                    map.put(cat, offers);
+                }
             }
         }
+
         return map;
     }
 }

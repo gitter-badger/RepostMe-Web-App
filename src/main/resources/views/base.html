@@ -9,40 +9,55 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     </head>
     <body>
+        {%
+            var session = context.getSession();
+            var user = session.get("user");
+            var isLoggined = (user != null);
+        %}
         <div class="container">
             <div class="header">
                 <div class="logo"><a href="{# api.that() #}">РепостМи</a></div>
                 <div class="searchbox"><input type="text" placeholder="Поиск"/></div>
-                <div class="controlls"><div class="login">Войти через ВКонтакте</div></div>
+                {% if(isLoggined) { %}
+                <div class="controlls"><div class="login">Добро пожаловать!</div></div>
+                {% } else { %}
+                <div class="controlls"><a href="{# api.that('vk/oauth') #}" class="login">Войти через ВКонтакте</a></div>
+                {% } %}
             </div>
 
 
             <div class="content">
                 <div class="action-bar">
-                    <!--
-                    <a href="#" class="action-element">Ссылка #1</a>
-                    <a href="#" class="action-element">Ссылка #2</a>
-                    <a href="#" class="action-element">Ссылка #3</a>
-                    -->
+                    {% block actionbar %}{% endblock %}
+                    <!-- <a href="#" class="action-element">Ссылка #1</a> -->
                 </div>
                 <div class="navigation">
                     <div class="navigation-main">
-                        <a href="{# api.that() #}" class="navigation-element {% if(data.curCat === 0) %}{# 'selected' #}"><i class="fa fa-home"></i>&nbsp;&nbsp;Главная</a>
-                        <a href="{# api.that('category/food') #}" class="navigation-element {% if(data.curCat === 1) %}{# 'selected' #}"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;Питание</a>
-                        <a href="{# api.that('category/entertainment') #}" class="navigation-element {% if(data.curCat === 2) %}{# 'selected' #}"><i class="fa fa-gamepad"></i>&nbsp;&nbsp;Развлечения</a>
-                        <a href="{# api.that('category/goods') #}" class="navigation-element {% if(data.curCat === 3) %}{# 'selected' #}"><i class="fa fa-cart-arrow-down"></i>&nbsp;&nbsp;Товары</a>
-                        <a href="{# api.that('category/service') #}" class="navigation-element {% if(data.curCat === 4) %}{# 'selected' #}"><i class="fa fa-user"></i>&nbsp;&nbsp;Услуги</a>
+                        {% var selected = []; %}
+                        {% if(data != undefined) { %}
+                        {% selected.push(data.curCat === 0); %}
+                        {% selected.push(data.curCat === 1); %}
+                        {% selected.push(data.curCat === 2); %}
+                        {% selected.push(data.curCat === 3); %}
+                        {% selected.push(data.curCat === 4); %}
+                        {% } %}
+                        <a href="{# api.that() #}" class="navigation-element {% if(selected[0]) %}{# 'selected' #}"><i class="fa fa-home"></i>Главная</a>
+                        <a href="{# api.that('category/food') #}" class="navigation-element {% if(selected[1]) %}{# 'selected' #}"><i class="fa fa-cutlery"></i>Питание</a>
+                        <a href="{# api.that('category/entertainment') #}" class="navigation-element {% if(selected[2]) %}{# 'selected' #}"><i class="fa fa-gamepad"></i>Развлечения</a>
+                        <a href="{# api.that('category/goods') #}" class="navigation-element {% if(selected[3]) %}{# 'selected' #}"><i class="fa fa-cart-arrow-down"></i>Товары</a>
+                        <a href="{# api.that('category/service') #}" class="navigation-element {% if(selected[4]) %}{# 'selected' #}"><i class="fa fa-user"></i>Услуги</a>
                     </div>
                     <div class="navigation-sub">
-                        <a href="#" class="navigation-element">Мои купоны</a>
-                        <a href="#" class="navigation-element">Помощь</a>
+                        <a href="{# api.that('mykupons') #}" class="navigation-element">Мои купоны</a>
+                        <a href="{# api.that('help') #}" class="navigation-element">Помощь</a>
                     </div>
                 </div>
                 <div class="wrapper">
                     <div class="main">
                         {% block content %}{% endblock %}
-                        <div class='footer'>© RepostMe, 2015</div>
+                        
                     </div>
+                    <div class='footer'>© RepostMe, 2015</div>
                 </div>
             </div>
         </div>

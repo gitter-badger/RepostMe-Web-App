@@ -15,7 +15,8 @@ a { text-decoration: inherit; color: inherit; }
 .searchbox input:focus { outline: 0; }
 
 .controlls { float: right; padding: 0 30px; }
-.controlls .login { cursor: pointer; color: #C00000; text-decoration: underline;}
+.controlls .login { color: #C00000; display: block; text-decoration: none; }
+.controlls a.login { text-decoration: underline; }
 
 .content { width: 100%; }
 .navigation, .main { display: inline-block; vertical-align: top; }
@@ -28,6 +29,8 @@ a { text-decoration: inherit; color: inherit; }
 .navigation-sub { background-color: #eee; font-size: 14px; }
 .navigation-sub .navigation-element { padding-left: 15px; height: 30px; line-height: 30px;  display: block; }
 .navigation-element:hover { background-color: #ddd; }
+.navigation-element i {display: inline-block; width: 16px; margin-right: 10px; }
+
 
 .action-bar { z-index: 10; height: 40px; width: 100%; overflow: hidden; background-color: #fff;  line-height: 40px; box-shadow: 0 2px 5px -2px #bbb; }
 .action-bar .action-element { height: 100%; display: inline-block; text-align: center; box-shadow: 2px 0 5px -2px #bbb; }
@@ -84,7 +87,9 @@ a { text-decoration: inherit; color: inherit; }
 .kupons-element .title { }
 .kupons-element .date { float: right; }
 
-.footer { text-align: left;  }
+.getkupon { margin-top: 15px; display: inline-block; background-color: #fff; box-shadow: 0 2px 3px 0px #bbb; padding: 15px; width: 700px; }
+
+.footer { text-align: left; margin: 30px 0 0 245px; }
 
 /* Super scroll! */
 .action-bar, .navigation { position: absolute; }
@@ -96,3 +101,8 @@ a { text-decoration: inherit; color: inherit; }
 
 .wrapper { width: 100%;  text-align: center; }
 @media (max-width: 1024px) { .wrapper { text-align: left; } .main { margin-left: 245px; }}
+
+/* VK Button*/
+#vk-button { display: block; text-align: center; margin: 15px 0;}
+#vk-button a {  border: 1px dashed #666; padding: 10px 15px; cursor: pointer; }
+#vk-button a:hover {  background-color: #eee; }

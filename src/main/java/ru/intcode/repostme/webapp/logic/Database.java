@@ -2,6 +2,7 @@ package ru.intcode.repostme.webapp.logic;
 
 import com.showvars.fugaframework.FugaApp;
 import com.showvars.fugaframework.configuration.Configuration;
+import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 public class Database {
@@ -16,5 +17,18 @@ public class Database {
 
     protected Sql2o getSql2o() {
         return sql2o;
+    }
+    
+    public static final String countKuponUsesQuery
+            = "SELECT COUNT(*) AS count FROM kupons WHERE oid = :oid;";
+    
+    public SQLCount countKuponUses(Offer offer) {
+        try (Connection c = sql2o.open()) {
+            return c.createQuery(countKuponUsesQuery).addParameter("oid", offer.getId()).executeAndFetchFirst(SQLCount.class);
+        }
+    }
+    
+    public static class SQLCount {
+        public long count;
     }
 }
