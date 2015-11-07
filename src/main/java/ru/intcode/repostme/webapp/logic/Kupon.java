@@ -12,6 +12,7 @@ public class Kupon {
     private String kupon;
     private float discount;
     private int uses;
+    private int friends;
 
     public long getId() {
         return id;
@@ -37,6 +38,10 @@ public class Kupon {
         return uses;
     }
 
+    public int getFriends() {
+        return friends;
+    }
+
     public void setUid(long uid) {
         this.uid = uid;
     }
@@ -57,7 +62,9 @@ public class Kupon {
         this.uses = uses;
     }
 
-   
+    public void setFriends(int friends) {
+        this.friends = friends;
+    }
 
     public static final String selectByUidAndOidQuery
             = "SELECT * FROM kupons WHERE uid = :uid AND oid = :oid;";

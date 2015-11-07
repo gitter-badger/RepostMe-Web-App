@@ -13,6 +13,7 @@ public class Offer {
     private String name;
     private String description;
     private String fullDescription;
+    private String vkDescription;
     private double discFrom;
     private double discTo;
     private long amount;
@@ -70,6 +71,10 @@ public class Offer {
         return catId;
     }
 
+    public String getVkDescription() {
+        return vkDescription;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -114,6 +119,9 @@ public class Offer {
         this.catId = catId;
     }
 
+    public void setVkDescription(String vkDescription) {
+        this.vkDescription = vkDescription;
+    }
     public static final String selectByIdQuery
             = "SELECT * FROM offers WHERE id = :id;";
     public static final String selectAllQuery
@@ -163,4 +171,5 @@ public class Offer {
 
         return map;
     }
+
 }

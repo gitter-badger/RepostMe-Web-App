@@ -58,7 +58,7 @@ public class Repost {
     }
 
     public static final String insertQuery
-            = "INSERT INTO reposts VALUES (null, :uid, :oid, now(), 0, 3);";
+            = "INSERT INTO reposts VALUES (null, :uid, :oid, NOW() + INTERVAL 1 DAY, 0, 0);";
 
     public static final String selectAllQuery
             = "SELECT * FROM reposts;";
@@ -73,7 +73,7 @@ public class Repost {
             = "UPDATE reposts SET verified = 1 WHERE id = :id;";
 
     public static final String updateVerifyCountQuery
-            = "UPDATE reposts SET verifyCount = verifyCount - 1 WHERE id = :id; ";
+            = "UPDATE reposts SET verifyCount = verifyCount + 1 WHERE id = :id; ";
 
     public static void updateVerifyCount(Database db, long rid) {
         try (Connection c = db.getSql2o().open()) {

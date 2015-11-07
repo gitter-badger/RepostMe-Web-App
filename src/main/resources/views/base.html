@@ -10,9 +10,9 @@
     </head>
     <body>
         {%
-            var session = context.getSession();
-            var user = session.get("user");
-            var isLoggined = (user != null);
+        var session = context.getSession();
+        var user = session.get("user");
+        var isLoggined = (user != null);
         %}
         <div class="container">
             <div class="header">
@@ -55,10 +55,17 @@
                 <div class="wrapper">
                     <div class="main">
                         {% block content %}{% endblock %}
-                        
+
                     </div>
                     <div class='footer'>© RepostMe, 2015</div>
                 </div>
+            </div>
+        </div>
+
+        <div class="toster-wrapper">
+            <div class="toster">
+                <div class="title">Опаньки...</div>
+                <div class="text">Lorem ipsum dolor sit amet.</div>
             </div>
         </div>
         <script type="text/javascript" src="{# api.asset('js/common.js') #}"></script>

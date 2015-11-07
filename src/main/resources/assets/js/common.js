@@ -1,3 +1,16 @@
+function toast(text) {
+    var win = $(".toster-wrapper");
+    $(".toster .text").text(text);
+    
+    if(win.is(':visible')) return;
+    
+    win.fadeIn(250);
+    
+    setTimeout(function() {
+        win.fadeOut(250);
+    }, 3000);
+}
+
 $(document).ready(function () {
     var wrap = $(".action-bar, .navigation, .content .main");
 
@@ -8,7 +21,6 @@ $(document).ready(function () {
             wrap.removeClass("super-fixed");
         }
     });
-
     $("#vk-button a").click(function () {
         var offer = {
             oid: $("#vk-button a").data('oid'),
@@ -22,17 +34,27 @@ $(document).ready(function () {
             data: JSON.stringify({oid: $("#vk-button a").data('oid')}),
             success: function (data, msg) {
                 if (data.success === true) {
-                    var productLink = "http://vk.com/share.php?url=" + offer.url + "&image=" + offer.image + "&title=" + encodeURIComponent(offer.title) + "&description=" + encodeURIComponent(offer.desc + "\n\n" + data.rid) + "&noparse=true";
+                    var productLink = "http://vk.com/share.php?url=" + offer.url + "&image=" + offer.image + "&title=" + offer.title + "&description=" + (offer.desc + "\n\n" + data.rid) + "&noparse=true";
                     window.open(productLink);
                 } else {
-                    alert("Ошибка");
+                    if(data.status === 10) {
+                        toast("Вы не авторизированы. Пожалуйста авторизируйтесь.");
+                    } else if(data.status === 20) {
+                        toast("У вас уже есть такой купон.");
+                    } else if(data.status === 30) {
+                        toast("У васс уже есть заявка на получение купона.");
+                    } else {
+                        toast("Неизвестная ошибка.");
+                    }
                 }
             },
             error: function () {
-                alert("Ошибка");
+                toast("Неизвестная ошибка.");
             }
         });
 
 
     });
 });
+
+
