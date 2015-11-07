@@ -23,6 +23,7 @@ public class MainController extends Controller {
 
     public static final Hashids hid = new Hashids("kSpdK0mG7lwVxOF1", 4);
     public static final Hashids rid = new Hashids("NRpgpmjwx0V4yQwJ", 6);
+    public static final Hashids kuponId = new Hashids("NRFg66cwx05BiQwJ", 8, "0123456789abcdefghigklmnopqrstuvwxyz");
 
     private static final Gson gson = new Gson();
 

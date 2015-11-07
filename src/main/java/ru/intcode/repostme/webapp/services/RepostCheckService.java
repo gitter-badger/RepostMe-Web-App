@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.intcode.repostme.webapp.controllers.MainController;
 import ru.intcode.repostme.webapp.logic.Database;
+import ru.intcode.repostme.webapp.logic.Kupon;
 import ru.intcode.repostme.webapp.logic.Repost;
 import ru.intcode.repostme.webapp.logic.User;
 
@@ -40,6 +41,7 @@ public class RepostCheckService extends Service {
                 if (repost.getDate().after(now)) {
                     Repost.delete(db, repost.getId());
                     // Create kupon and notify user!
+                    Kupon.insertKupon(db, repost.getUid(), repost.getOid(), 0.5f);
                 }
             }
 
