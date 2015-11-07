@@ -7,9 +7,15 @@
 {% block content %}
 <h2>Мои купоны</h2>
 <div class="kupons">
+    {% for(var k in data.kupons ) { %}
+    {% var kupon = data.kupons[k]; %}
     <a class="kupons-element" href="#">
-        <div class="title">Кофе в кафетории «Starbucks»</div>
-        <div class="date">2 ноября 2015 в 21:32</div>
+        <div class="title">{# kupon.name #}</div>
+        
+        <div class="info">Осталось использований: {# kupon.uses #}</div>
+        <div class="info"><b>{# kupon.kupon.toUpperCase() #}</b></div>
+        <div class="info">{# (new java.text.DecimalFormat("#.##")).format(kupon.discount) #}%</div>
     </a>
+    {% } %}
 </div>
 {% endblock %}

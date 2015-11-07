@@ -83,9 +83,9 @@ a { text-decoration: inherit; color: inherit; }
 .kupons .kupons-element:hover { background-color: #ddd; }
 .kupons .kupons-element:last-child { border: 0; }
 
-.kupons-element .title, .kupons-element .date, .kupons-element .action {  display: inline-block; }
+.kupons-element .title, .kupons-element .info, .kupons-element .action {  display: inline-block; }
 .kupons-element .title { }
-.kupons-element .date { float: right; }
+.kupons-element .info { float: right; margin: 0 15px; }
 
 .getkupon { margin-top: 15px; display: inline-block; background-color: #fff; box-shadow: 0 2px 3px 0px #bbb; padding: 15px; width: 700px; }
 

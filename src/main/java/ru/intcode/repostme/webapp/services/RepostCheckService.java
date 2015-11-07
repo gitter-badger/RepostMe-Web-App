@@ -1,6 +1,5 @@
 package ru.intcode.repostme.webapp.services;
 
-import com.google.gson.JsonObject;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -10,7 +9,6 @@ import com.showvars.fugaframework.services.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import ru.intcode.repostme.webapp.controllers.MainController;
 import ru.intcode.repostme.webapp.logic.Database;
 import ru.intcode.repostme.webapp.logic.Kupon;
@@ -39,9 +37,24 @@ public class RepostCheckService extends Service {
                 queue.addTask(new VerifyTask(app, repost));
             } else {
                 if (repost.getDate().after(now)) {
-                    Repost.delete(db, repost.getId());
-                    // Create kupon and notify user!
-                    Kupon.insertKupon(db, repost.getUid(), repost.getOid(), 0.5f);
+                    try {
+                        Repost.delete(db, repost.getId());
+                        
+                        User u = User.selectUserByUid(db, repost.getUid());
+                        if (u == null) {
+                            continue;
+                        }
+                        
+                        HttpResponse<JsonNode> hr = Unirest.get("https://api.vk.com/method/friends.get")
+                                .queryString("user_id", Integer.parseInt(u.getVkId())).asJson();
+                        
+                        int friends = hr.getBody().getObject().getJSONArray("response").length();
+                        
+                        Kupon.insertKupon(db, repost.getUid(), repost.getOid(), friends > 500 ? 1 : friends / 500, friends);
+                        
+                    } catch (Exception ex) {
+                        
+                    }
                 }
             }
 
@@ -75,6 +88,12 @@ public class RepostCheckService extends Service {
                 JSONArray obj = hr.getBody().getObject().getJSONArray("response");
                 if (obj.getInt(0) > 0) {
                     Repost.updateVerified(db, repost.getId());
+                } else {
+                    if(repost.getVerifyCount() > 3) {
+                        Repost.delete(db, repost.getId());
+                    } else {
+                        Repost.updateVerifyCount(db, repost.getId());
+                    }
                 }
             } catch (UnirestException ex) {
             }

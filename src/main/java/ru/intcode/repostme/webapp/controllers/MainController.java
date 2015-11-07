@@ -109,7 +109,7 @@ public class MainController extends Controller {
         User user = (User) session.get("user");
 
         if (user == null) {
-            return ok("{\"success\": false}").setContentType("application/json");
+            return ok("{\"success\": false, \"status\": 10}").setContentType("application/json");
         }
 
         Database db = (Database) ctx.getApp().getObject("db");
@@ -120,7 +120,7 @@ public class MainController extends Controller {
         List<Kupon> kupons = Kupon.selectByUidAndOid(db, user.getId(), rr.oid);
 
         if (kupons != null && !kupons.isEmpty()) {
-            return ok("{\"success\": false}").setContentType("application/json");
+            return ok("{\"success\": false, \"status\": 20}").setContentType("application/json");
         }
 
         List<Repost> reposts = Repost.selectByUidAndOid(db, user.getId(), rr.oid);
@@ -138,12 +138,34 @@ public class MainController extends Controller {
         }
 
         if (flag) {
-            return ok("{\"success\": false}").setContentType("application/json");
+            return ok("{\"success\": false, \"status\": 30}").setContentType("application/json");
         }
 
         String repostId = "!" + rid.encode(Repost.insert(db, user.getId(), rr.oid));
 
         return ok("{\"success\": true, \"rid\": \"" + repostId + "\"}").setContentType("application/json");
+    }
+
+    public static Response mykupons(Context ctx) throws TemplateNotFoundException, TemplateRenderException {
+        Session session = ctx.getSession();
+        User user = (User) session.get("user");
+
+        if (user == null) {
+            return redirect(Urls.that(ctx));
+        }
+
+        Database db = (Database) ctx.getApp().getObject("db");
+
+        MainData data = new MainData();
+
+        data.curCat = -1;
+
+        List<Kupon.KuponTriple> kupons = Kupon.selectByUid(db, user.getId());
+
+        data.kupons = kupons;
+        
+
+        return ok(view(ctx, "mykupons.html", data));
     }
 
     public static class RepostRequest {
@@ -155,6 +177,8 @@ public class MainController extends Controller {
 
         public Map<Category, List<Offer>> all;
 
+        public List<Kupon.KuponTriple> kupons;
+
         public long curCat = 0;
         public String curCatName = "";
 
@@ -164,8 +188,4 @@ public class MainController extends Controller {
         public Hashids hid = MainController.hid;
     }
 
-    public static Response mykupons(Context ctx) throws TemplateNotFoundException, TemplateRenderException {
-
-        return ok(view(ctx, "mykupons.html"));
-    }
 }

@@ -57,6 +57,8 @@ public class Kupon {
         this.uses = uses;
     }
 
+   
+
     public static final String selectByUidAndOidQuery
             = "SELECT * FROM kupons WHERE uid = :uid AND oid = :oid;";
 
@@ -69,12 +71,23 @@ public class Kupon {
         }
     }
 
+    public static final String selectByUidQuery
+            = "SELECT kupon, name, discount, uses FROM (SELECT * FROM kupons WHERE uid = :uid) AS tmp LEFT JOIN offers ON offers.id = oid;";
+
+    public static List<KuponTriple> selectByUid(Database db, long uid) {
+        try (Connection c = db.getSql2o().open()) {
+            return c.createQuery(selectByUidQuery)
+                    .addParameter("uid", uid)
+                    .executeAndFetch(KuponTriple.class);
+        }
+    }
+
     private static final String insertCuponSQL
-            = "INSERT INTO kupons VALUES (:id, :uid, :oid, :kupon, :discount, :uses);";
+            = "INSERT INTO kupons VALUES (:id, :uid, :oid, :kupon, :discount, :uses, :friends);";
     private static final String getDiscSQL
             = "SELECT discFrom, discTo, kuponAmount FROM offers WHERE id=:oid;";
 
-    public static void insertKupon(Database db, long uid, long oid, float discPer) {
+    public static void insertKupon(Database db, long uid, long oid, float discPer, long friends) {
         try (Connection c = db.getSql2o().open()) {
             FloatPair pair = c.createQuery(getDiscSQL).addParameter("oid", oid).executeAndFetchFirst(FloatPair.class);
             float discount;
@@ -92,12 +105,13 @@ public class Kupon {
                     .addParameter("kupon", kupon)
                     .addParameter("discount", discount)
                     .addParameter("uses", pair.kuponAmount)
+                    .addParameter("friends", friends)
                     .executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     private static final String getNextKuponIdSQL
             = "SELECT MAX(id)+1 FROM kupons;";
 
@@ -106,10 +120,19 @@ public class Kupon {
             return c.createQuery(getNextKuponIdSQL).executeAndFetchFirst(Long.class);
         }
     }
-    
+
     static class FloatPair {
+
         float discFrom;
         float discTo;
         long kuponAmount;
+    }
+
+    public static class KuponTriple {
+
+        public String kupon;
+        public String name;
+        public int uses;
+        public float discount;
     }
 }

@@ -10,19 +10,19 @@ $(document).ready(function () {
     });
 
     $("#vk-button a").click(function () {
-        //data-url=""
         var offer = {
             oid: $("#vk-button a").data('oid'),
             title: $("#vk-button a").data('title'),
             desc: $("#vk-button a").data('desc'),
-            url: $("#vk-button a").data('url')
+            url: $("#vk-button a").data('url'),
+            image: $("#vk-button a").data('image')
         };
         $.ajax("/ajax/repost", {
             method: "POST",
             data: JSON.stringify({oid: $("#vk-button a").data('oid')}),
             success: function (data, msg) {
                 if (data.success === true) {
-                    var productLink = "http://vk.com/share.php?url=" + offer.url + "&title=" + encodeURIComponent(offer.title) + "&description=" + encodeURIComponent(offer.desc + "\n\n" + data.rid) + "&noparse=true";
+                    var productLink = "http://vk.com/share.php?url=" + offer.url + "&image=" + offer.image + "&title=" + encodeURIComponent(offer.title) + "&description=" + encodeURIComponent(offer.desc + "\n\n" + data.rid) + "&noparse=true";
                     window.open(productLink);
                 } else {
                     alert("Ошибка");

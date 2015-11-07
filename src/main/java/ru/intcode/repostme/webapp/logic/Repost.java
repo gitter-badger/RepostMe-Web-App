@@ -11,6 +11,7 @@ public class Repost {
     private long oid;
     private Timestamp date;
     private int verified;
+    private int verifyCount;
 
     public long getId() {
         return id;
@@ -22,6 +23,10 @@ public class Repost {
 
     public long getOid() {
         return oid;
+    }
+
+    public int getVerifyCount() {
+        return verifyCount;
     }
 
     public void setUid(long uid) {
@@ -48,8 +53,12 @@ public class Repost {
         this.verified = verified;
     }
 
+    public void setVerifyCount(int verifyCount) {
+        this.verifyCount = verifyCount;
+    }
+
     public static final String insertQuery
-            = "INSERT INTO reposts VALUES (null, :uid, :oid, now(), 0);";
+            = "INSERT INTO reposts VALUES (null, :uid, :oid, now(), 0, 3);";
 
     public static final String selectAllQuery
             = "SELECT * FROM reposts;";
@@ -62,6 +71,16 @@ public class Repost {
 
     public static final String updateVerifiedQuery
             = "UPDATE reposts SET verified = 1 WHERE id = :id;";
+
+    public static final String updateVerifyCountQuery
+            = "UPDATE reposts SET verifyCount = verifyCount - 1 WHERE id = :id; ";
+
+    public static void updateVerifyCount(Database db, long rid) {
+        try (Connection c = db.getSql2o().open()) {
+            c.createQuery(updateVerifyCountQuery)
+                    .addParameter("id", rid).executeUpdate();
+        }
+    }
 
     public static long insert(Database db, long uid, long oid) {
         try (Connection c = db.getSql2o().open()) {
@@ -103,4 +122,5 @@ public class Repost {
                     .executeUpdate();
         }
     }
+
 }

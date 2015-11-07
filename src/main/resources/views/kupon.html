@@ -15,7 +15,7 @@
 <p>Для получения купона нужно нажать на кнопку "Поделиться" и создать репост предложенной записи у вас на стене. После этого, этот репостдолжен продержатся на стене не менее 24 часа. По истечению этого времени вы будете уведомлены через электронную почту о том, что ваш купон создан и готов к использованию.</p>
 <p>Итак, приступим!</p>
 <p>
-<span id="vk-button"><a target="_blank" data-oid="{# data.offer.getId() #}" data-title="{# data.offer.getName() #}" data-desc="{# data.offer.getFullDescription() #}" data-url="{# api.that('offer/' + data.hid.encode(data.offer.getId())) #}">Поделиться</a></span> 
+<span id="vk-button"><a target="_blank" data-oid="{# data.offer.getId() #}" data-image="{# api.that('assets/offers' + data.offer.getPic()) #}" data-title="{# data.offer.getName() #}" data-desc="{# data.offer.getFullDescription() #}" data-url="{# api.that('offer/' + data.hid.encode(data.offer.getId())) #}">Поделиться</a></span> 
 </p>
 </div>
 {% endblock %}
