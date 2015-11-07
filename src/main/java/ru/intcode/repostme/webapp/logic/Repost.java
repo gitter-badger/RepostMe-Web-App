@@ -49,16 +49,19 @@ public class Repost {
     }
 
     public static final String insertQuery
-            = "INSERT INTO reposts VALUES (null, :uid, :oid, null, null);";
+            = "INSERT INTO reposts VALUES (null, :uid, :oid, now(), 0);";
 
     public static final String selectAllQuery
-            = "SELECT * FROM reports;";
-    
+            = "SELECT * FROM reposts;";
+
     public static final String selectByUidAndOidQuery
             = "SELECT * FROM reposts WHERE uid = :uid AND oid = :oid;";
 
     public static final String deleteQuery
-            = "SELECT * FROM reposts WHERE id = :id;";
+            = "DELETE FROM reposts WHERE id = :id;";
+
+    public static final String updateVerifiedQuery
+            = "UPDATE reposts SET verified = 1 WHERE id = :id;";
 
     public static long insert(Database db, long uid, long oid) {
         try (Connection c = db.getSql2o().open()) {
@@ -93,4 +96,11 @@ public class Repost {
         }
     }
 
+    public static void updateVerified(Database db, long rid) {
+        try (Connection c = db.getSql2o().open()) {
+            c.createQuery(updateVerifiedQuery)
+                    .addParameter("id", rid)
+                    .executeUpdate();
+        }
+    }
 }

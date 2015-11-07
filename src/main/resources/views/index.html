@@ -19,7 +19,7 @@
     {% var offer = offers[k]; %}
     <div class="offers-list">
         <a class="offer" href="{# api.that('offer/' + data.hid.encode(offer.getId())) #}">
-            <div class="image"><img src="assets/offers/{# offer.getPic() #}"/></div>
+            <div class="image"><img src="{# api.that('assets/offers/' + offer.getPic()) #}"/></div>
             <div class="info">
                 {% var descFrom = offer.getDiscFrom(); %}
                 {% var descTo   = offer.getDiscTo(); %}

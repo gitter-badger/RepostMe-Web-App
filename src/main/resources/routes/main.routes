@@ -19,7 +19,7 @@ GET $/offer/(\w+)            MainController.offer(1)
 GET $/mykupons              MainController.mykupons()
 
 // Ajax
-POST $/api/repost            MainController.repost()
+POST $/ajax/repost            MainController.repost()
 
 // Static pages
 GET $/help                  view("help.html")

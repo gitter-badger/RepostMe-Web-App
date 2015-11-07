@@ -11,7 +11,7 @@ $(document).ready(function () {
 
     $("#vk-button a").click(function () {
         //data-url=""
-        var data = {
+        var offer = {
             oid: $("#vk-button a").data('oid'),
             title: $("#vk-button a").data('title'),
             desc: $("#vk-button a").data('desc'),
@@ -22,7 +22,7 @@ $(document).ready(function () {
             data: JSON.stringify({oid: $("#vk-button a").data('oid')}),
             success: function (data, msg) {
                 if (data.success === true) {
-                    var productLink = "http://vk.com/share.php?url=" + data.url + "&title=" + encodeURIComponent(data.title) + "&description=" + encodeURIComponent(data.desc + "\n\n" + data.rid) + "&noparse=true";
+                    var productLink = "http://vk.com/share.php?url=" + offer.url + "&title=" + encodeURIComponent(offer.title) + "&description=" + encodeURIComponent(offer.desc + "\n\n" + data.rid) + "&noparse=true";
                     window.open(productLink);
                 } else {
                     alert("Ошибка");

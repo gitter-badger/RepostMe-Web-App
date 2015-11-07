@@ -37,17 +37,26 @@ public class User {
         this.vkToken = vkToken;
     }
 
+    public static final String selectByUid
+            = "SELECT* FROM users WHERE id = :id;";
+
     public static final String selectUserByVkIdQuery
             = "SELECT * FROM users WHERE vkId = :vkId;";
+
+    public static final String insertUserQuery
+            = "INSERT INTO users VALUES (null, :email, :vkId, :vkToken);";
+
+    public static User selectUserByUid(Database db, long uid) {
+        try (Connection c = db.getSql2o().open()) {
+            return c.createQuery(User.selectByUid).addParameter("id", uid).executeAndFetchFirst(User.class);
+        }
+    }
 
     public static User selectUserByVkId(Database db, String vkId) {
         try (Connection c = db.getSql2o().open()) {
             return c.createQuery(User.selectUserByVkIdQuery).addParameter("vkId", vkId).executeAndFetchFirst(User.class);
         }
     }
-
-    public static final String insertUserQuery
-            = "INSERT INTO users VALUES (null, :email, :vkId, :vkToken);";
 
     public static User insertUser(Database db, User user) {
         try (Connection c = db.getSql2o().open()) {

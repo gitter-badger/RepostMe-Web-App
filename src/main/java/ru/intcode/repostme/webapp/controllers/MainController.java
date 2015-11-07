@@ -8,6 +8,7 @@ import com.showvars.fugaframework.foundation.controllers.DefaultController;
 import com.showvars.fugaframework.sessions.Session;
 import com.showvars.fugaframework.templates.TemplateNotFoundException;
 import com.showvars.fugaframework.templates.TemplateRenderException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import org.hashids.Hashids;
@@ -20,7 +21,8 @@ import ru.intcode.repostme.webapp.logic.User;
 
 public class MainController extends Controller {
 
-    public static final Hashids hid = new Hashids("kSpdK0mG7lwVxOF1");
+    public static final Hashids hid = new Hashids("kSpdK0mG7lwVxOF1", 4);
+    public static final Hashids rid = new Hashids("NRpgpmjwx0V4yQwJ", 6);
 
     private static final Gson gson = new Gson();
 
@@ -102,35 +104,49 @@ public class MainController extends Controller {
 
     public static Response repost(Context ctx) {
         Session session = ctx.getSession();
-        
+
         User user = (User) session.get("user");
-        
-        if(user == null) {
+
+        if (user == null) {
             return ok("{\"success\": false}").setContentType("application/json");
         }
-        
+
         Database db = (Database) ctx.getApp().getObject("db");
-        
-        RepostRequest rr = gson.fromJson(ctx.getRequest().getContent().toString(), RepostRequest.class);
-        
+
+        String json = ctx.getRequest().getContent().toString(Charset.forName("UTF-8"));
+        RepostRequest rr = gson.fromJson(json, RepostRequest.class);
+
         List<Kupon> kupons = Kupon.selectByUidAndOid(db, user.getId(), rr.oid);
-        
-        if(kupons != null && !kupons.isEmpty()) {
+
+        if (kupons != null && !kupons.isEmpty()) {
             return ok("{\"success\": false}").setContentType("application/json");
         }
-        
+
         List<Repost> reposts = Repost.selectByUidAndOid(db, user.getId(), rr.oid);
-        
-        if(reposts != null && !reposts.isEmpty()) {
+
+        boolean flag = false;
+
+        if (reposts != null && !reposts.isEmpty()) {
+            for (Repost repost : reposts) {
+                if (repost.getVerified() == 0) {
+                    Repost.delete(db, repost.getId());
+                } else {
+                    flag = true;
+                }
+            }
+        }
+
+        if (flag) {
             return ok("{\"success\": false}").setContentType("application/json");
         }
-        
-        long repostId = Repost.insert(db, user.getId(), rr.oid);
-        
-        return ok("{\"success\": true, \"rid\": "+ repostId +"}").setContentType("application/json");
+
+        String repostId = "!" + rid.encode(Repost.insert(db, user.getId(), rr.oid));
+
+        return ok("{\"success\": true, \"rid\": \"" + repostId + "\"}").setContentType("application/json");
     }
-    
+
     public static class RepostRequest {
+
         public long oid;
     }
 

@@ -1,12 +1,24 @@
 package ru.intcode.repostme.webapp.services;
 
 import com.showvars.fugaframework.services.Service;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class QueueService extends Service {
 
+    private final Queue<Task> queue = new LinkedBlockingQueue<>();
+
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Task task = queue.poll();
+
+        if (task != null) {
+            task.run();
+        }
     }
-    
+
+    public void addTask(Task task) {
+        queue.add(task);
+    }
+
 }
