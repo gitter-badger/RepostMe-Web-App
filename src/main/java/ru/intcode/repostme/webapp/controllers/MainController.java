@@ -15,6 +15,7 @@ import org.hashids.Hashids;
 import ru.intcode.repostme.webapp.logic.Category;
 import ru.intcode.repostme.webapp.logic.Database;
 import ru.intcode.repostme.webapp.logic.Kupon;
+import ru.intcode.repostme.webapp.logic.KuponDescription;
 import ru.intcode.repostme.webapp.logic.Offer;
 import ru.intcode.repostme.webapp.logic.Repost;
 import ru.intcode.repostme.webapp.logic.User;
@@ -102,6 +103,26 @@ public class MainController extends Controller {
 
         return ok(view(ctx, "kupon.html", data));
     }
+    
+    
+    public static Response kupon(Context ctx, String hash) throws TemplateNotFoundException, TemplateRenderException {
+        long id = kuponId.decode(hash)[0];
+        Database db = (Database) ctx.getApp().getObject("db");
+        KuponData data = new KuponData();
+        User user = (User) ctx.getSession().get("user");
+        if (user == null) {
+            return DefaultController.notFound(ctx);
+        }
+        KuponDescription kd = KuponDescription.selectByUid(db, user.getId());
+        data.hid = kd.kupon;
+        data.discount = kd.discount;
+        data.name = kd.name;
+        data.description = kd.description;
+        data.fullDescription = kd.fullDescription;
+        data.b64qr = KuponDescription.getQR(kd.kupon);
+        return ok(view(ctx, "printKupon.html", data));
+    }
+    
 
     public static Response repost(Context ctx) {
         Session session = ctx.getSession();
@@ -186,6 +207,15 @@ public class MainController extends Controller {
         public long kuponNumber;
 
         public Hashids hid = MainController.hid;
+    }
+    
+    public static class KuponData {
+        public String hid;
+        public float discount;
+        public String name;
+        public String description;
+        public String fullDescription;
+        public String b64qr;
     }
 
 }

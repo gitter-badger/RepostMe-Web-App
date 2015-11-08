@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Купон для печати</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p>{# data.name #}</p>
+        <p>{# data.discount #}%</p>
+        <p>{# data.hid.toUpperCase() #}</p>
+        <img src="data:image/png;base64,{# data.b64qr #}" />
+        <p>{# data.description #}</p>
+        <p>{# data.fullDescription #}</p>
+    </body>
+</html>

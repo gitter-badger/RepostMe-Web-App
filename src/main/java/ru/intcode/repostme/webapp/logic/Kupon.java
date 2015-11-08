@@ -136,10 +136,10 @@ public class Kupon {
     }
 
     public static class KuponTriple {
-
         public String kupon;
         public String name;
         public int uses;
         public float discount;
+        
     }
 }

@@ -18,6 +18,8 @@ GET $/offer/(\w+)            MainController.offer(1)
 
 GET $/mykupons              MainController.mykupons()
 
+GET $/kupon/(.+)              MainController.kupon(1)
+
 // Ajax
 POST $/ajax/repost            MainController.repost()
 
