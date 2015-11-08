@@ -12,7 +12,7 @@ public class Database {
 
     public Database(FugaApp app) {
         this.config = app.getConfiguration();
-        this.sql2o = new Sql2o(config.get("app.db.url", "jdbc:mysql://localhost:3306/repostme"), "user", "user");
+        this.sql2o = new Sql2o(config.get("app.db.url", "jdbc:mysql://localhost:3306/repostme"), config.get("app.db.user", "user"), config.get("app.db.password", "user"));
     }
 
     protected Sql2o getSql2o() {
