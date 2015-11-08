@@ -9,7 +9,7 @@
 <div class="kupons">
     {% for(var k in data.kupons ) { %}
     {% var kupon = data.kupons[k]; %}
-    <a class="kupons-element" href="#">
+    <a class="kupons-element" href="{# api.that('kupon/' + kupon.kupon) #}">
         <div class="title">{# kupon.name #}</div>
         
         <div class="info">Осталось использований: {# kupon.uses #}</div>
