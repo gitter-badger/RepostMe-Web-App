@@ -42,7 +42,7 @@ $(document).ready(function () {
                     } else if(data.status === 20) {
                         toast("У вас уже есть такой купон.");
                     } else if(data.status === 30) {
-                        toast("У васс уже есть заявка на получение купона.");
+                        toast("У вас уже есть заявка на получение купона.");
                     } else {
                         toast("Неизвестная ошибка.");
                     }
